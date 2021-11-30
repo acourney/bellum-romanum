@@ -140,24 +140,27 @@ def fight(player_health, supplies, enemy_health)
   loop do
     first_strike = ["player", "enemy"].sample
     if first_strike == "player"
-      speaking_prompt("Do you aim for the legs (l), head (h), arms (a), or chest (c)?")
+      speaking_prompt("You see an opening to attack.")
+      speaking_prompt("Do you aim for the legs, head, arms, or chest?")
       aim  = gets.chomp
 
       case aim 
-      when "l" || "legs"
+      when "legs"
         hit_box("legs")
-      when "h" || "head"
+      when "head"
         hit_box("head")
-      when "a" || "arms"
+      when "arms"
         hit_box("arms")
-      when "c" || "chest"
+      when "chest"
         hit_box("chest")
+      else
+        speaking_prompt("Please select the full word of the body part you're aiming for.")
       end
 
       if hit_box(aim)
         action_prompt("You strike for the #{aim}.")
         damage = (0..player_damgage).to_a.sample
-        speaking_prompt("You deal #{damage} damage.")
+        action_prompt("You deal #{damage} damage.")
         enemy_health = enemy_health - damage
         speaking_prompt("The enemy is at #{enemy_health} HP.")
       else
@@ -167,15 +170,25 @@ def fight(player_health, supplies, enemy_health)
 
 
     else
-      speaking_prompt("The enemy attacks.")
-      damage = (0..enemy_damage).to_a.sample
-      speaking_prompt("The enemy dealt #{damage} damage.")
-      player_health = player_health - damage
+      aim = %w(arms legs chest head).sample
+      speaking_prompt("The enemy attacks, and aims for your #{aim}.")
+      
+      if hit_box(aim)
+        damage = (0..enemy_damage).to_a.sample
+        action_prompt("The enemy dealt #{damage} damage.")
+        player_health = player_health - damage
+        speaking_prompt("Your health is #{player_health} HP.")
+      else
+        action_prompt("You parried")
+        gets()
+      end
+      
     end
 
-    break if player_health == 0 || enemy_health == 0
+    break if player_health <= 0 || enemy_health <= 0
     
   end
+  player_health
 end
 
 def roman_game(name, supplies, health)
@@ -199,7 +212,7 @@ def roman_game(name, supplies, health)
       when "s" || "S"
         speaking_prompt("Your fellow soldiers are listening to your commander's speech.")
       when "v" || "V"
-        speaking_prompt("You are surrounded")
+        speaking_prompt("The sky is dotted by arrows, enemy legions fill the horizon, black and buzzing with the sounds of war.")
       when "i" || "I"
         speaking_prompt("In your possession, you have #{supplies}")
       when "n" || "N"
@@ -231,6 +244,8 @@ def roman_game(name, supplies, health)
         action_prompt("This speech inspires you")
         health += 10
         action_prompt("Your HP has increased by 10 points (it is now #{health.to_s})")
+        gets()
+
         break
 
       when "n" || "N"
@@ -259,10 +274,12 @@ def roman_game(name, supplies, health)
 
     when "l" || "L"
       speaking_prompt("As you get closer this soldier looms larger and larger.")
-      fight(health, supplies, 50)
+      health = fight(health, supplies, 50)
+      speaking_prompt("You left that battle with #{health} HP.")
     when "r" || "R"
-      speaking_prompt("This soldier is smaller than you thought")
-      fight(health, supplies, 30)
+      speaking_prompt("This soldier is smaller than he seemed from afar.")
+      health = fight(health, supplies, 30)
+      speaking_prompt("You left that battle with #{health} HP.")
     when "e" || "E"
       speaking_prompt("You take this chance to escape")
     end
@@ -295,8 +312,8 @@ end
 
 
 ########## introduction ##########
-credits()
-intro()
+# credits()
+# intro()
 speaking_prompt("Welcome to Bellum Romanum")
 gets
 system("clear")

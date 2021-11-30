@@ -195,6 +195,8 @@ def roman_game(name, supplies, health)
   health = 100
 
   speaking_prompt("So the war begins... You fight for your leader, Julius Caesar")
+  speaking_prompt("In order to return to Rome with all the rights of a true Roman citizen, you must sucessfully
+  fight in five battles against Rome's enemy, the Gauls")
   loop do 
     gets()
     loop do 
@@ -283,26 +285,6 @@ def roman_game(name, supplies, health)
     when "e" || "E"
       speaking_prompt("You take this chance to escape")
     end
-
-
-      
-
-    # speaking_prompt("The first battle begins.")
-    # gets()
-
-    # speaking_prompt("Two Gaulic soldiers rush toward you and your company.
-    # Do you go for the soldier on the left (L) or right (R)?
-    # Alternatively, do you try to escape the fight? (E)")
-    # action = gets.chomp()
-
-    # case action
-    # when "i" || "I"
-    #   speaking_prompt("In your possession, you have #{supplies}")
-    # when "l" || "L"
-    #   speaking_prompt("As you get closer this soldier looms larger and larger.")
-    # when "r" || "R"
-    #   speaking_prompt("This soldier is smaller than you thought")
-
     
     break if gets.chomp() == "N" || "n"
   end
@@ -312,8 +294,8 @@ end
 
 
 ########## introduction ##########
-# credits()
-# intro()
+credits()
+intro()
 speaking_prompt("Welcome to Bellum Romanum")
 gets
 system("clear")
@@ -360,6 +342,7 @@ health = 100
 supplies = []
 speaking_prompt("Here, #{name}, you will need this.")
 action_prompt("You have been given an iron sword")
+gets()
 
 supplies = inventory(supplies, "iron sword")
 
@@ -368,8 +351,10 @@ supplies = inventory(supplies, "iron sword")
 if allegiance == "Rome"
   roman_game(name, supplies, health)
 else
-  speaking_prompt("This feature will be available in a future release of Bellum Romanum")
+  speaking_prompt("This feature (choosing the side of the Gauls) will be available in a future release of Bellum Romanum")
+  gets()
   speaking_prompt("Your allegiance has been changed to Rome")
+  gets()
   roman_game(name, supplies, health)
 end
 

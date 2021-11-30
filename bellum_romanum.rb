@@ -20,6 +20,15 @@ def help_message()
   To quit the game at any time, press ^z.")
 end
 
+def gametips()
+  speaking_prompt("Follow the prompts to continue your fight in this war. 
+  You can always press H to check your health, 
+  I to check your inventory,
+  or type help to view this message.
+  To quit the game at any time, press ^z.
+  To win the game you must win 5 battles in the Gaulic war")
+end
+
 def credits()
 
   puts("     an ")
@@ -114,6 +123,45 @@ def inventory(supplies, item)
   supplies << item
 end
 
+def roman_battle_1(name, supplies, health)
+  speaking_prompt("The first battle begins.")
+  gets()
+  
+  loop do 
+    speaking_prompt("Two Gaulic soldiers rush toward you and your company.
+    Do you go for the soldier on the left (L) or right (R)?
+    Alternatively, do you try to escape the fight? (E)")
+    action = gets.chomp()
+
+    case action 
+    when  "help"
+      help_message
+    when "i" || "I"
+      speaking_prompt("In your possession, you have #{supplies}")
+    when "h" || "H"
+      speaking_prompt("You have #{health} HP.")
+    when "l" || "L"
+      speaking_prompt("As you get closer this soldier looms larger and larger.")
+      health = fight(health, supplies, 50)
+      speaking_prompt("You left that battle with #{health} HP.")
+    when "r" || "R"
+      speaking_prompt("This soldier is smaller than he seemed from afar.")
+      health = fight(health, supplies, 30)
+      speaking_prompt("You left that battle with #{health} HP.")
+    when "e" || "E"
+      speaking_prompt("You take this chance to escape")
+    else 
+      speaking_prompt("You must take action.")
+    end
+
+  break if health <= 0 
+  end 
+end
+
+
+
+
+
 def hit_box(body_part)
   hit = false
   chances = {
@@ -133,7 +181,7 @@ def fight(player_health, supplies, enemy_health)
   player_damgage = 10
   enemy_damage = 10
   
-  if supplies.include?("iron sword")
+  if supplies.include?("iron sword") || supplies.include?("bow and arrows")
     player_damgage = player_damgage * 2
   end
 
@@ -257,34 +305,13 @@ def roman_game(name, supplies, health)
       end
     end
 
-    speaking_prompt("The first battle begins.")
-    gets()
-  
-
-    speaking_prompt("Two Gaulic soldiers rush toward you and your company.
-    Do you go for the soldier on the left (L) or right (R)?
-    Alternatively, do you try to escape the fight? (E)")
-    action = gets.chomp()
-
-    case action 
-    when  "help"
-      help_message
-    when "i" || "I"
-      speaking_prompt("In your possession, you have #{supplies}")
-    when "h" || "H"
-      speaking_prompt("You have #{health} HP.")
-
-    when "l" || "L"
-      speaking_prompt("As you get closer this soldier looms larger and larger.")
-      health = fight(health, supplies, 50)
-      speaking_prompt("You left that battle with #{health} HP.")
-    when "r" || "R"
-      speaking_prompt("This soldier is smaller than he seemed from afar.")
-      health = fight(health, supplies, 30)
-      speaking_prompt("You left that battle with #{health} HP.")
-    when "e" || "E"
-      speaking_prompt("You take this chance to escape")
+    if health > 0
+      roman_battle_1(name, supplies, health)
+    else
+      speaking_prompt("You have honorably died defending your empire.")
     end
+
+    
     
     break if gets.chomp() == "N" || "n"
   end
@@ -296,6 +323,8 @@ end
 ########## introduction ##########
 credits()
 intro()
+gametips()
+puts("")
 speaking_prompt("Welcome to Bellum Romanum")
 gets
 system("clear")

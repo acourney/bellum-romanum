@@ -1,0 +1,29 @@
+1. 
+
+make each battle a new method
+  (take everything in the roman_game() method right now, and add it to the first battle)
+
+so it'll end up looking like
+
+def roman_game(name, supplies, health)
+
+  first_battle(name, supplies, health)
+
+  propmt(" you left that battle with #{healthh } HP)
+
+  second_battle(name, sp) etc.
+
+end
+
+2. 
+
+at the end of each battle check if HP is >= 0
+if it gets below 0, you lose
+
+3. 
+
+you have to beat 5 battles based on dan carlins podcast (what the battle scenery looks like/ what  the fellow soldiers say)
+
+
+4. 
+if you can make it through all  five battles with your life,  you get to  go  to a hospital and see the romans win the gaulic war.

@@ -9,7 +9,7 @@ Wars, all written in Ruby.
 
 
 # Installing
-To install, the files to a folder of your choosing.
+To install, move the game files to a folder of your choosing.
 
 # Running the Game
 Navigate to your Install folder on terminal and run 

@@ -202,18 +202,45 @@ def roman_nervii_ambush(name, supplies, health)
     case choice
     when "cavalry"
       action_prompt("You have joined the cavalry.")
-      break
+      action_prompt("You are now in possesion of a horse.")
+      supplies = inventory(supplies, "horse")
     when "infantry"
       action_prompt("You have joined the infantry.")
-      break
     else
       speaking_prompt("You must pick your fight.")
     end
-  end
 
-  ### cavalry, turns out the band is actually a force of 60,000 gauls of three tribes. You are at a disadvantage
-  ### infantry. you are at an advantage because you are behind the cavalry and you can see it's an ambush
-    
+    if choice == "cavalry"
+      speaking_prompt("You begin to cross the river with your band...")
+      gets()
+      speaking_prompt("From all directions, the enemy surrounds you, taking advantage of the fact
+      that your commander didn't set up an infantry screen to protect your entrenching force.")
+      gets()
+      speaking_prompt("Before the Romans can get even two legions across the river, 60,000 fighters ambubsh.
+      The infantry is coming to help. For now, you are at a disadvantage")
+      health = cavalry_fight(health, supplies, 75)
+      speaking_prompt("You left that battle with #{health} HP.")
+      gets()
+    else
+      speaking_prompt("The cavalry leads the way across the river, while the infantry hangs behid.")
+      gets()
+      speaking_prompt("From afar, you watch as the cavalry forces are surprised by an attack on all sides
+      by a force of Gauls, 60,0000 men strong.")
+      gets()
+      speaking_prompt("The cavalry was attacked off-guard, but your commander, Julius Caesar, joins the infantry
+      to bolster the Roman forces. You are at a slight advantage in this fight.")
+      gets()
+      health = fight(health, supplies, 55)
+      speaking_prompt("You left that battle with #{health} HP.")
+      gets()
+    end
+
+    if health <= 0 
+      action_prompt("You have died honorably defending your empire.")
+      break
+    end
+
+  end
 
 end
 
@@ -228,7 +255,8 @@ def hit_box(body_part)
     "legs" => (0..40).to_a,
     "arms" => (0..30).to_a,
     "chest" => (0..70).to_a,
-    "head" => (0..15).to_a
+    "head" => (0..15).to_a,
+    "trample" => (0..50).to_a
   }
   chance = (0..100).to_a.sample 
 
@@ -241,7 +269,7 @@ def fight(player_health, supplies, enemy_health)
   player_damgage = 10
   enemy_damage = 10
   
-  if supplies.include?("iron sword") || supplies.include?("bow and arrows")
+  if supplies.include?("iron sword")
     player_damgage = player_damgage * 2
   end
 
@@ -274,6 +302,87 @@ def fight(player_health, supplies, enemy_health)
           action_prompt("You deal #{damage} damage.")
           enemy_health = enemy_health - damage
           speaking_prompt("The enemy is at #{enemy_health} HP.")
+          break
+        else
+          action_prompt("You missed.")
+          break
+        end
+      end
+
+
+    else
+      aim = %w(arms legs chest head).sample
+      speaking_prompt("The enemy attacks, and aims for your #{aim}.")
+      
+      if hit_box(aim)
+        damage = (0..enemy_damage).to_a.sample
+        action_prompt("The enemy dealt #{damage} damage.")
+        player_health = player_health - damage
+        speaking_prompt("Your health is #{player_health} HP.")
+      else
+        action_prompt("You parried")
+        gets()
+      end
+      
+    end
+
+    break if player_health <= 0 || enemy_health <= 0
+    
+  end
+  player_health
+end
+
+
+def cavalry_fight(player_health, supplies, enemy_health)
+  player_damgage = 15
+  enemy_damage = 15
+  
+  if supplies.include?("iron sword")
+    player_damgage = player_damgage + 5
+  end
+
+  loop do
+    first_strike = ["player", "enemy"].sample
+    if first_strike == "player"
+      speaking_prompt("You see an opening to attack.")
+
+      loop do 
+        speaking_prompt("Do you aim for the legs, head, arms, or chest with your sword, or trample the enemy with your horse?")
+        speaking_prompt("type 'legs', 'head', 'arms', 'chest' or 'trample'")
+        speaking_prompt("TYPE THE FULL WORD OR THE GAME BREAKS")
+        aim = gets.chomp
+        case aim 
+        when "legs"
+          hit_box("legs")
+        when "head"
+          hit_box("head")
+        when "arms"
+          hit_box("arms")
+        when "chest"
+          hit_box("chest")
+        when "trample"
+          hit_box("trample")
+        else
+          speaking_prompt("Please select the full word of the body part you're aiming for.")
+        end
+      
+
+        if hit_box(aim)
+          
+          if aim == "trample"
+            action_prompt("You ride directly at an enemy soldier.")
+            damage = (0..player_damgage).to_a.sample
+            action_prompt("You deal #{damage} damage.")
+            enemy_health = enemy_health - damage
+            speaking_prompt("The enemy is at #{enemy_health} HP.")
+          else
+            action_prompt("You strike for the #{aim}.")
+            damage = (0..player_damgage).to_a.sample
+            action_prompt("You deal #{damage} damage.")
+            enemy_health = enemy_health - damage
+            speaking_prompt("The enemy is at #{enemy_health} HP.")
+          end
+
           break
         else
           action_prompt("You missed.")

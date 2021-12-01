@@ -272,6 +272,54 @@ def roman_nervii_ambush(name, supplies, health)
   health
 end
 
+def roman_archery_battle(name, supplies, health)
+  speaking_prompt("The ambush by Gallic tribes at the river Sambre brought the Romans a hardwon victory...")
+  gets
+  system("clear")
+
+  speaking_prompt("Your commander has decided that the best way to defeat the physically imposing Gauls with their longswords is with archers.")
+  action_prompt("You have been given a bow and arrow.")
+  gets
+  system("clear")
+  supplies = inventory(supplies, "bow and arrow")
+  # binding.pry
+
+  speaking_prompt("Ready your bows. (hit the 'return' key to fire your arrow)")
+  gets
+  system("clear")
+
+  puts("3")
+  sleep(1)
+  system 'clear'
+
+  puts("2")
+  sleep(1)
+  system 'clear'
+
+  puts("1")
+  sleep(1)
+  system 'clear'
+
+  time1 = Time.now
+  puts("fire")
+  gets()
+  time2 = Time.now
+  # binding.pry
+
+  if (time2.sec - time1.sec) <= 1
+    # binding.pry
+    puts("you aim for an enemy soldier")
+    gets()
+  else
+    puts("you took too long to  fire, and missed")
+    gets()
+  end
+
+  system 'clear'
+
+
+end
+
 def hit_box(body_part)
   hit = false
   chances = {
@@ -331,6 +379,7 @@ def fight(player_health, supplies, enemy_health)
           break
         else
           action_prompt("You missed.")
+          gets()
           break
         end
       end
@@ -417,6 +466,7 @@ def cavalry_fight(player_health, supplies, enemy_health)
           break
         else
           action_prompt("You missed.")
+          gets()
           break
         end
       end
@@ -519,14 +569,20 @@ def roman_game(name, supplies, health)
       end
     end
 
-    if health > 0
-      health = roman_battle_1(name, supplies, health)
-    else
-      speaking_prompt("You have honorably died defending your empire.")
-    end
+    # if health > 0
+    #   health = roman_battle_1(name, supplies, health)
+    # else
+    #   speaking_prompt("You have honorably died defending your empire.")
+    # end
+
+    # if health > 0
+    #   health = roman_nervii_ambush(name, supplies, health)
+    # else
+    #   speaking_prompt("You have honorably died defending your empire.")
+    # end  
 
     if health > 0
-      health = roman_nervii_ambush(name, supplies, health)
+      health = roman_archery_battle(name, supplies, health)
     else
       speaking_prompt("You have honorably died defending your empire.")
     end  
@@ -539,9 +595,9 @@ end
 
 
 ########## introduction ##########
-credits()
-intro()
-gametips()
+# credits()
+# intro()
+# gametips()
 puts("")
 speaking_prompt("Welcome to Bellum Romanum")
 gets
@@ -590,10 +646,8 @@ supplies = []
 speaking_prompt("Here, #{name}, you will need this.")
 action_prompt("You have been given an iron sword")
 gets()
-
-supplies = inventory(supplies, "iron sword")
-gets
 system("clear")
+supplies = inventory(supplies, "iron sword")
 
 ########## game start ##########
 

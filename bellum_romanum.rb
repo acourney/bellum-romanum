@@ -6,10 +6,13 @@ def valid_name?(string)
   alphabet = ('a'..'z').to_a << ('A'..'Z').to_a
   alphabet.flatten!
 
-  string.chars.any? do |letter|
-    alphabet.include?(letter)
+  if string.nil?
+    false
+  else
+    string.chars.any? do |letter|
+      alphabet.include?(letter)
+    end
   end
-
 end
 
 def help_message()
@@ -144,10 +147,12 @@ def roman_battle_1(name, supplies, health)
       speaking_prompt("As you get closer this soldier looms larger and larger.")
       health = fight(health, supplies, 50)
       speaking_prompt("You left that battle with #{health} HP.")
+      break
     when "r" || "R"
       speaking_prompt("This soldier is smaller than he seemed from afar.")
       health = fight(health, supplies, 30)
       speaking_prompt("You left that battle with #{health} HP.")
+      break
     when "e" || "E"
       speaking_prompt("You take this chance to escape")
     else 
@@ -155,8 +160,63 @@ def roman_battle_1(name, supplies, health)
     end
 
   break if health <= 0 
-  end 
+  end
+  health 
 end
+
+def roman_nervii_ambush(name, supplies, health)
+  speaking_prompt("You've won your first battle, and your company makes its way north.")
+  loop do
+    speaking_prompt("Would you like to view your surroundings (v), talk to your fellow soldiers (t), or search around for supplies (s)? (skip with (n)).")
+    action = gets.chomp()
+
+    case action
+    when "help"
+      help_message
+    when "i" || "I"
+      speaking_prompt("In your possession, you have #{supplies}")
+    when "h" || "H"
+      speaking_prompt("You have #{health} HP.")
+    when "v" || "V"
+      speaking_prompt("Your company is setting up camp along the river Sambre")
+    when "t" || "T"
+      speaking_prompt("The soldier next to you says, 'We've detected a small band of Gauls ahead, we're sending in a light cavalry.'")
+    when "s" || "S"
+      speaking_prompt("Someone sees you searching for supplies and hands you a small kit.")
+      action_prompt("You have been given a first aid kit.")
+      health += 20
+      action_prompt("Your HP has increased by 20 points (it is now #{health.to_s})")
+    when "n" || "N"
+      break
+    else
+      speaking_prompt("You must take action")
+    end
+  end
+
+  speaking_prompt("Your commander is asking soldiers to join either a light cavalry or an infantry force to defeat a small band of Gauls.")
+  
+  loop do 
+    speaking_prompt("Which force would you like to join? (cavalry or infantry)")
+    speaking_prompt("TYPE THE FULL WORD OR THE GAME BREAKS")
+    choice = gets.chomp()
+    case choice
+    when "cavalry"
+      action_prompt("You have joined the cavalry.")
+      break
+    when "infantry"
+      action_prompt("You have joined the infantry.")
+      break
+    else
+      speaking_prompt("You must pick your fight.")
+    end
+  end
+
+  ### cavalry, turns out the band is actually a force of 60,000 gauls of three tribes. You are at a disadvantage
+  ### infantry. you are at an advantage because you are behind the cavalry and you can see it's an ambush
+    
+
+end
+
 
 
 
@@ -189,31 +249,36 @@ def fight(player_health, supplies, enemy_health)
     first_strike = ["player", "enemy"].sample
     if first_strike == "player"
       speaking_prompt("You see an opening to attack.")
-      speaking_prompt("Do you aim for the legs, head, arms, or chest?")
-      aim  = gets.chomp
 
-      case aim 
-      when "legs"
-        hit_box("legs")
-      when "head"
-        hit_box("head")
-      when "arms"
-        hit_box("arms")
-      when "chest"
-        hit_box("chest")
-      else
-        speaking_prompt("Please select the full word of the body part you're aiming for.")
-      end
+      loop do 
+        speaking_prompt("Do you aim for the legs, head, arms, or chest?")
+        speaking_prompt("TYPE THE FULL WORD OR THE GAME BREAKS")
+        aim = gets.chomp
+        case aim 
+        when "legs"
+          hit_box("legs")
+        when "head"
+          hit_box("head")
+        when "arms"
+          hit_box("arms")
+        when "chest"
+          hit_box("chest")
+        else
+          speaking_prompt("Please select the full word of the body part you're aiming for.")
+        end
+      
 
-      if hit_box(aim)
-        action_prompt("You strike for the #{aim}.")
-        damage = (0..player_damgage).to_a.sample
-        action_prompt("You deal #{damage} damage.")
-        enemy_health = enemy_health - damage
-        speaking_prompt("The enemy is at #{enemy_health} HP.")
-      else
-        action_prompt("You missed.")
-        gets()
+        if hit_box(aim)
+          action_prompt("You strike for the #{aim}.")
+          damage = (0..player_damgage).to_a.sample
+          action_prompt("You deal #{damage} damage.")
+          enemy_health = enemy_health - damage
+          speaking_prompt("The enemy is at #{enemy_health} HP.")
+          break
+        else
+          action_prompt("You missed.")
+          break
+        end
       end
 
 
@@ -306,12 +371,16 @@ def roman_game(name, supplies, health)
     end
 
     if health > 0
-      roman_battle_1(name, supplies, health)
+      health = roman_battle_1(name, supplies, health)
     else
       speaking_prompt("You have honorably died defending your empire.")
     end
 
-    
+    if health > 0
+      health = roman_nervii_ambush(name, supplies, health)
+    else
+      speaking_prompt("You have honorably died defending your empire.")
+    end  
     
     break if gets.chomp() == "N" || "n"
   end

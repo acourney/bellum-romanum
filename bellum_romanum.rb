@@ -29,7 +29,13 @@ def gametips()
   I to check your inventory,
   or type help to view this message.
   To quit the game at any time, press ^z.
-  To win the game you must win 5 battles in the Gaulic war")
+  To win the game you must win 5 battles in the Gallic war.
+  
+  IMPORTANT RULES
+    1. if the screen goes blank, just press return
+    2. if a prompt asks you to type in a full word, type it in with no typos or the game will break and exit
+    3. you cannot save
+    4. your choices do matter, and it's possible to lose. Try to protect your life.")
 end
 
 def credits()
@@ -131,7 +137,7 @@ def roman_battle_1(name, supplies, health)
   gets()
   
   loop do 
-    speaking_prompt("Two Gaulic soldiers rush toward you and your company.
+    speaking_prompt("Two Gallic soldiers rush toward you and your company.
     Do you go for the soldier on the left (L) or right (R)?
     Alternatively, do you try to escape the fight? (E)")
     action = gets.chomp()
@@ -166,6 +172,9 @@ end
 
 def roman_nervii_ambush(name, supplies, health)
   speaking_prompt("You've won your first battle, and your company makes its way north.")
+  gets
+  system("clear")
+
   loop do
     speaking_prompt("Would you like to view your surroundings (v), talk to your fellow soldiers (t), or search around for supplies (s)? (skip with (n)).")
     action = gets.chomp()
@@ -179,13 +188,19 @@ def roman_nervii_ambush(name, supplies, health)
       speaking_prompt("You have #{health} HP.")
     when "v" || "V"
       speaking_prompt("Your company is setting up camp along the river Sambre")
+      gets
+      system("clear")
     when "t" || "T"
       speaking_prompt("The soldier next to you says, 'We've detected a small band of Gauls ahead, we're sending in a light cavalry.'")
+      gets
+      system("clear")
     when "s" || "S"
       speaking_prompt("Someone sees you searching for supplies and hands you a small kit.")
       action_prompt("You have been given a first aid kit.")
       health += 20
       action_prompt("Your HP has increased by 20 points (it is now #{health.to_s})")
+      gets
+      system("clear")
     when "n" || "N"
       break
     else
@@ -204,35 +219,48 @@ def roman_nervii_ambush(name, supplies, health)
       action_prompt("You have joined the cavalry.")
       action_prompt("You are now in possesion of a horse.")
       supplies = inventory(supplies, "horse")
+      gets
+      system("clear")
     when "infantry"
       action_prompt("You have joined the infantry.")
+      gets
+      system("clear")
     else
       speaking_prompt("You must pick your fight.")
     end
 
     if choice == "cavalry"
       speaking_prompt("You begin to cross the river with your band...")
-      gets()
+      gets
+      system("clear")
       speaking_prompt("From all directions, the enemy surrounds you, taking advantage of the fact
       that your commander didn't set up an infantry screen to protect your entrenching force.")
-      gets()
-      speaking_prompt("Before the Romans can get even two legions across the river, 60,000 fighters ambubsh.
-      The infantry is coming to help. For now, you are at a disadvantage")
+      gets
+      system("clear")
+      speaking_prompt("Before the Romans can get even two legions across the river, 60,000 Gallic fighters ambush you.
+      The infantry is coming to help. For now, you are at a disadvantage.")
       health = cavalry_fight(health, supplies, 75)
       speaking_prompt("You left that battle with #{health} HP.")
-      gets()
+      gets
+      system("clear")
+      break
     else
       speaking_prompt("The cavalry leads the way across the river, while the infantry hangs behid.")
-      gets()
+      gets
+      system("clear")
       speaking_prompt("From afar, you watch as the cavalry forces are surprised by an attack on all sides
       by a force of Gauls, 60,0000 men strong.")
-      gets()
+      gets
+      system("clear")
       speaking_prompt("The cavalry was attacked off-guard, but your commander, Julius Caesar, joins the infantry
       to bolster the Roman forces. You are at a slight advantage in this fight.")
-      gets()
+      gets
+      system("clear")
       health = fight(health, supplies, 55)
       speaking_prompt("You left that battle with #{health} HP.")
-      gets()
+      gets
+      system("clear")
+      break
     end
 
     if health <= 0 
@@ -241,13 +269,8 @@ def roman_nervii_ambush(name, supplies, health)
     end
 
   end
-
+  health
 end
-
-
-
-
-
 
 def hit_box(body_part)
   hit = false
@@ -276,6 +299,7 @@ def fight(player_health, supplies, enemy_health)
   loop do
     first_strike = ["player", "enemy"].sample
     if first_strike == "player"
+      system("clear")
       speaking_prompt("You see an opening to attack.")
 
       loop do 
@@ -297,11 +321,13 @@ def fight(player_health, supplies, enemy_health)
       
 
         if hit_box(aim)
+          system("clear")
           action_prompt("You strike for the #{aim}.")
           damage = (0..player_damgage).to_a.sample
           action_prompt("You deal #{damage} damage.")
           enemy_health = enemy_health - damage
           speaking_prompt("The enemy is at #{enemy_health} HP.")
+          gets()
           break
         else
           action_prompt("You missed.")
@@ -312,6 +338,7 @@ def fight(player_health, supplies, enemy_health)
 
     else
       aim = %w(arms legs chest head).sample
+      system("clear")
       speaking_prompt("The enemy attacks, and aims for your #{aim}.")
       
       if hit_box(aim)
@@ -344,6 +371,7 @@ def cavalry_fight(player_health, supplies, enemy_health)
   loop do
     first_strike = ["player", "enemy"].sample
     if first_strike == "player"
+      system("clear")
       speaking_prompt("You see an opening to attack.")
 
       loop do 
@@ -368,6 +396,7 @@ def cavalry_fight(player_health, supplies, enemy_health)
       
 
         if hit_box(aim)
+          system("clear")
           
           if aim == "trample"
             action_prompt("You ride directly at an enemy soldier.")
@@ -375,12 +404,14 @@ def cavalry_fight(player_health, supplies, enemy_health)
             action_prompt("You deal #{damage} damage.")
             enemy_health = enemy_health - damage
             speaking_prompt("The enemy is at #{enemy_health} HP.")
+            gets()
           else
             action_prompt("You strike for the #{aim}.")
             damage = (0..player_damgage).to_a.sample
             action_prompt("You deal #{damage} damage.")
             enemy_health = enemy_health - damage
             speaking_prompt("The enemy is at #{enemy_health} HP.")
+            gets()
           end
 
           break
@@ -396,6 +427,7 @@ def cavalry_fight(player_health, supplies, enemy_health)
       speaking_prompt("The enemy attacks, and aims for your #{aim}.")
       
       if hit_box(aim)
+        system("clear")
         damage = (0..enemy_damage).to_a.sample
         action_prompt("The enemy dealt #{damage} damage.")
         player_health = player_health - damage
@@ -419,9 +451,12 @@ def roman_game(name, supplies, health)
   speaking_prompt("So the war begins... You fight for your leader, Julius Caesar")
   speaking_prompt("In order to return to Rome with all the rights of a true Roman citizen, you must sucessfully
   fight in five battles against Rome's enemy, the Gauls")
+  gets
+  system("clear")
   loop do 
     gets()
     loop do 
+      system("clear")
       speaking_prompt("Would you like to speak to your fellow soldiers (S), view your surroundings (V), or view your inventory (I)? (or hit (N) to skip)")
       action = gets.chomp
 
@@ -435,8 +470,12 @@ def roman_game(name, supplies, health)
 
       when "s" || "S"
         speaking_prompt("Your fellow soldiers are listening to your commander's speech.")
+        gets
+        system("clear")
       when "v" || "V"
         speaking_prompt("The sky is dotted by arrows, enemy legions fill the horizon, black and buzzing with the sounds of war.")
+        gets
+        system("clear")
       when "i" || "I"
         speaking_prompt("In your possession, you have #{supplies}")
       when "n" || "N"
@@ -448,6 +487,7 @@ def roman_game(name, supplies, health)
     end
 
     loop do
+      system("clear")
       speaking_prompt("Would you like to listen to your commander's speech? (Y/N)")
       action = gets.chomp
 
@@ -469,7 +509,7 @@ def roman_game(name, supplies, health)
         health += 10
         action_prompt("Your HP has increased by 10 points (it is now #{health.to_s})")
         gets()
-
+        system("clear")
         break
 
       when "n" || "N"
@@ -552,6 +592,8 @@ action_prompt("You have been given an iron sword")
 gets()
 
 supplies = inventory(supplies, "iron sword")
+gets
+system("clear")
 
 ########## game start ##########
 

@@ -4,7 +4,7 @@ _https://github.com/acourney/2021_Christmas_Present.git_
 That is a private repo
 
 
-This includes libraries and examples for the Video Game Bellum Romanum. The Video Game Bellum Romanum is an experimental text-based war game based in the Gaullic 
+This includes libraries and examples for the Video Game Bellum Romanum. The Video Game Bellum Romanum is an experimental text-based war game based in the Gallic 
 Wars, all written in Ruby.
 
 

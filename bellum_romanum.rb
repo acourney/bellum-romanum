@@ -62,31 +62,56 @@ def navy_battle_ascii()
   puts("    ~~~~~~ ~    ~~~~~~     ~~    ~    ~~~~~   ~~~")
 end
 
-def roman_ascii()
-  puts("    _.-\"\"}      ")
-  puts("    / \"\" ;      ")
-  puts("  .-\"` __] ',                         ")
-  puts("  I_ \"\"__.`-,;           |   |      ")
-  puts("  I_.,-\"ii\"{             !___!      ")
-  puts("  | ||  ||  |        ,    | |      ")
-  puts("  | ||  ||  |       .;    | |      ")
-  puts("  | ||  ||  |       | \    | |      ")
-  puts("  | ||  ||  |       |  |  | |      ")
-  puts("  | ||  ||  |       |  |  | |   __      ")
-  puts("  | ||  ||  |       |  |  | |  |  |      ")
-  puts("  | ||  ||  |   ;|  |  |  | |  |  |      ")
-  puts("  | ||  ||  |\"\_/ `,_|  |  | |  |  |  ___.--\"\"`\      ")
-  puts("  | ||  ||  |       |  | \.| |=,|  |\"\"          `,      ")
-  puts("  | ||  ||  |       |  |  | |  |  |____________.-+.__      ")
-  puts(" _:_!|_,'!__!       |  |  | |_,!  !         __,I   `\"|      ")
-  puts(" :     |      `-\"\"`,.!__!-,!_!_ '--'`,_,--\"\"\"         |      ")
-  puts(" |     ;___          `\"-.-'    `,_.-'\"            _..-'           ") 
-  puts(" `-._ |   \"\"\"--,,_     |`\"\"-.--'|         __.--\"\"                ")
-  puts("    `\"--..__     \"\"--.|    |   |_,_  _.-'                         ")
-  puts("            \"\"--.._   `-,__!_.-' _,\"\"                            ")
-  puts("                   \"\"--,____.--'\"                                 ")
-
+def roman_ascii_won()
+  puts("                                                                                    _.-\"\"}                                                 ")
+  puts("          ~                                                                         / \"\" ;                                                 ")
+  puts("                                                          @@                      .-\"` __] ',                                               ")
+  puts("                          ~                                       @               I_ \"\"__.`-,;             |   |                           ")
+  puts("                                           ~                *                     I_.,-\"ii\"{               !___!                           ")
+  puts("                                                                                  | ||  ||  |         ,     | |                              ")
+  puts("                                @                    @               @            | ||  ||  |        .;     | |                              ")
+  puts("             @                                                                    | ||  ||  |         | \\   | |                             ")
+  puts("                            @                     @         *                     | ||  ||  |         |  |  | |                              ")
+  puts("                                         *                        *               | ||  ||  |         |  |  | |    __                        ")
+  puts("                     *                                                 ~          | ||  ||  |         |  |  | |   |  |                       ")
+  puts("                                   ~         @                   @          @     | ||  ||  |   ;     |  |  | |   |  |  |                    ")
+  puts("     ,,                                                 0                         | ||  ||  |\"\_/ `,_  |  |  | |   |  |  ___.--\"\"`\       ")
+  puts("   |_C                      ~,~             @           |                         | ||  ||  |         |  | \.| |=  |  |\"\"          `,      ")
+  puts("    /\\_                   ~~/(\\                    0      \\ 0     \\0/    0        | ||  ||  |         |  |  | |   |  |____________.-+.     ")
+  puts("   (   /|        ~~~_____~~// `             \\o/    |        |\\     |     |    _:_!|_,'!__!         |  |  |  |_!   !         __,    `\"|      ")
+  puts("  _/ \\-/ |=========(=)===|(_|_               |    / \\      / \\    / \\       :     |      `-\"\"`,.!__!-,!_!_ '--'`,_,--\"\"\"         |  ")
+  puts("   ((+))|         |/\_  _/   \\                ^           *        *           |     ;___          `\"-.-'    `,_.-'\"            _..-'     ") 
+  puts("     -           /           -                                             *    |   \"\"\"--,,_     |`\" \"-.--'|         __.--\"\"          ")
+  puts("                                                                                    `\"--..__     \"\"--.|    |   |_,_  _.-'                 ")
+  puts("                                                                                           \"\"--.._   `-,__!_.-' _,\"\"                     ")
+  puts("                                                                                                  \"\"--,____.--'\"                          ")
 end
+
+def roman_ascii_lost()
+  puts ("                                                                                  _.-\"\"}                                                  ")
+  puts ("                                                                                  / \"\" ;                                                  ")
+  puts ("                                                                                .-\"` __] ',                                                ")
+  puts ("                                                                                I_ \"\"__.`-,;             |   |                            ")
+  puts ("                                                                                I_.,-\"ii\"{               !___!                            ")
+  puts ("                                                                                | ||  ||  |         ,     | |                               ")
+  puts ("                                                                                | ||  ||  |        .;     | |                               ")
+  puts ("                                                                                | ||  ||  |         | \    | |                              ")
+  puts ("                                                                                | ||  ||  |         |  |  | |                               ")
+  puts ("                                                                                | ||  ||  |         |  |  | |    __                         ")
+  puts ("                                                                                | ||  ||  |         |  |  | |   |  |                        ")
+  puts ("                                                                                | ||  ||  |   ;     |  |  | |   |  |  |                     ")
+  puts ("     ,,                                                                         | ||  ||  |\"_/ `,_  |  |  | |   |  |  ___.--\"\"`          ")
+  puts ("   |_C                      ~,~                 ,,     ,,                       | ||  ||  |         |  | .| |=  |  |\"\"          `,        ")   
+  puts ("    /\\_                   ~~/(\\                D      D                         | ||  ||  |         |  |  | |   |  |____________.-+.      ")     
+  puts ("   (   /|        ~~~_____~~// `               <|>`   <|>`                     _:_!|_,'!__!       |  |  |  |_!   !         __,    `\"|       ")     
+  puts ("  _/ \\-/ |=========(=)===|(_|_                 |  `   |  `                   :     |      `-\"\"`,.!__!-,!_!_ '--'`,_,--\"\"\"         |   ")    
+  puts ("   ((+))|         |/_  _/   \\                 / \\    / \\                  |     ;___          `\"-.-'    `,_.-'\"            _..-'       ")        
+  puts ("     -           /           -                                                |   \"\"\"--,,_     |`\" \"-.--'|         __.--\"\"           ")     
+  puts ("                                                                                  `\"--..__     \"\"--.|    |   |_,_  _.-'                  ")           
+  puts ("                                                                                         \"\"--.._   `-,__!_.-' _,\"\"                      ")         
+  puts ("                                                                                                \"\"--,____.--'\"                           ")          
+end
+
 
 def valid_name?(string)
   alphabet = ('a'..'z').to_a << ('A'..'Z').to_a
@@ -103,9 +128,7 @@ end
 
 def help_message()
   speaking_prompt("Follow the prompts to continue your fight in this war. 
-  You can always press H to check your health, 
-  I to check your inventory,
-  or type help to view this message.
+  type help to view this message.
   To quit the game at any time, press ^z.")
 end
 
@@ -518,14 +541,35 @@ end
 
 def ending_ceremonies(name, supplies)
   if supplies.include?("treaty with Ariovistus")
+    roman_ascii_lost()
     puts("As you arrive in Rome, you see Pompey and Crassus welcoming Julius Caesar back to Rome.")
-    puts("Because you created a treaty with the Gauls rather than conquer more land for Rome, Julius Caesar has lost his power in Rome.")
-    puts("For you, and for Julius Caesar, this war has ended.")
+    speaking_prompt("Crassus: People of Rome...!")
+    gets()
+    speaking_prompt("Wherefore rejoice? What conquest brings he home?")
+    gets()
+    speaking_prompt("He signed a peach treaty with Ariovistus, king in Gaul.")
+    gets()
+    speaking_prompt("His credit, along with Rome's, now stands on such slippery ground...")
+    gets()
+    system("clear")
+    roman_ascii_lost()
+    speaking_prompt("For you, #{name}, the war is over. You have been discharged from duty.")
+    gets()
     exit
   else
-    puts("You return to Rome in a triumph")
-    puts("Julius Casear himself places a laurel on your head for your help in the Gallic Wars.")
-    action_prompt("insert some ascii art of Rome here.")
+    roman_ascii_won()
+    puts("======  Julius Caesar has won the war with the barbaric Gauls  ======")
+    gets()
+    puts("======  Romans' love to #{name} is no less than that to Julius Caesar himself  ======")
+    gets()
+    action_prompt("Julius Casear places a laurel on your head for your help in the Gallic Wars.")
+    gets()
+    system("clear")
+    ascii_caesar()
+    speaking_prompt("Caesar: Good friend, #{name}, go in, and taste some wine with me; And we, like friends, will straightway go together.")
+    gets()
+    speaking_prompt("For you, #{name}, the war is over. You have been discharged from duty, and have a long life of politics ahead.")
+    gets()
     exit
   end
 end
@@ -942,6 +986,10 @@ end
 
 
 ########## introduction ##########
+
+ending_ceremonies("Angus", [])
+gets() 
+
 credits()
 intro()
 gametips()

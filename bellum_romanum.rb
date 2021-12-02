@@ -112,7 +112,6 @@ def roman_ascii_lost()
   puts ("                                                                                                \"\"--,____.--'\"                           ")          
 end
 
-
 def valid_name?(string)
   alphabet = ('a'..'z').to_a << ('A'..'Z').to_a
   alphabet.flatten!
@@ -138,10 +137,10 @@ def gametips()
   To win the game you must win 5 battles in the Gallic war.
   
   IMPORTANT RULES
-    1. if the screen goes blank, just press return
-    2. if a prompt asks you to type in a full word, type it in with no typos or the game will break and exit
-    3. you cannot save
-    4. your choices do matter, and it's possible to lose. Try to protect your life.")
+    1. If the screen goes blank, just press return
+    2. Try not to make typos! This has been playtested but only by one person
+    3. You cannot save
+    4. Your choices do matter, and it's possible to lose. Try to protect your life.")
 end
 
 def credits()
@@ -264,26 +263,52 @@ def roman_battle_1(name, supplies, health)
     case action 
     when  "help"
       help_message
-    when "i" || "I"
+    when "i" 
       speaking_prompt("In your possession, you have #{supplies}")
-    when "h" || "H"
+    when "I"
+      speaking_prompt("In your possession, you have #{supplies}")
+    when "h"
+      speaking_prompt("You have #{health} HP.")  
+    when "H"
       speaking_prompt("You have #{health} HP.")
-    when "l" || "L"
+    when "l"
       speaking_prompt("As you get closer this soldier looms larger and larger.")
       gets()
       health = fight(health, supplies, 50)
       speaking_prompt("You left that battle with #{health} HP.")
       gets()
       break
-    when "r" || "R"
+    when "L"
+      speaking_prompt("As you get closer this soldier looms larger and larger.")
+      gets()
+      health = fight(health, supplies, 50)
+      speaking_prompt("You left that battle with #{health} HP.")
+      gets()
+      break
+    when "r"
       speaking_prompt("This soldier is smaller than he seemed from afar.")
       gets()
       health = fight(health, supplies, 30)
       speaking_prompt("You left that battle with #{health} HP.")
       gets()
       break
-    when "e" || "E"
+    when "R"
+      speaking_prompt("This soldier is smaller than he seemed from afar.")
+      gets()
+      health = fight(health, supplies, 30)
+      speaking_prompt("You left that battle with #{health} HP.")
+      gets()
+      break
+    when "e"
       speaking_prompt("You take this chance to escape")
+      gets()
+      action_prompt("This feature will be available in future versions of the game. You have to choose a soldier to fight.... try again later")
+      gets()
+    when "E"
+      speaking_prompt("You take this chance to escape")
+      gets()
+      action_prompt("This feature will be available in future versions of the game. You have to choose a soldier to fight.... try again later")
+      gets()
     else 
       speaking_prompt("You must take action.")
     end
@@ -307,26 +332,47 @@ def roman_nervii_ambush(name, supplies, health)
     case action
     when "help"
       help_message
-    when "i" || "I"
+    when "i"
       speaking_prompt("In your possession, you have #{supplies}")
-    when "h" || "H"
+    when "I"
+      speaking_prompt("In your possession, you have #{supplies}")
+    when "h"
       speaking_prompt("You have #{health} HP.")
-    when "v" || "V"
+    when "H"
+      speaking_prompt("You have #{health} HP.")
+    when "v"
       speaking_prompt("Your company is setting up camp along the river Sambre")
       gets
       system("clear")
-    when "t" || "T"
+    when "V"
+      speaking_prompt("Your company is setting up camp along the river Sambre")
+      gets
+      system("clear")
+    when "t"
       speaking_prompt("The soldier next to you says, 'We've detected a small band of Gauls ahead, we're sending in a light cavalry.'")
       gets
       system("clear")
-    when "s" || "S"
+    when "T"
+      speaking_prompt("The soldier next to you says, 'We've detected a small band of Gauls ahead, we're sending in a light cavalry.'")
+      gets
+      system("clear")
+    when "S"
       speaking_prompt("Someone sees you searching for supplies and hands you a small kit.")
       action_prompt("You have been given a first aid kit.")
       health += 20
       action_prompt("Your HP has increased by 20 points (it is now #{health.to_s})")
       gets
       system("clear")
-    when "n" || "N"
+    when "s"
+      speaking_prompt("Someone sees you searching for supplies and hands you a small kit.")
+      action_prompt("You have been given a first aid kit.")
+      health += 20
+      action_prompt("Your HP has increased by 20 points (it is now #{health.to_s})")
+      gets
+      system("clear")
+    when "N"
+      break
+    when "n"
       break
     else
       speaking_prompt("You must take action")
@@ -337,7 +383,7 @@ def roman_nervii_ambush(name, supplies, health)
   
   loop do 
     speaking_prompt("Which force would you like to join? (cavalry or infantry)")
-    speaking_prompt("TYPE THE FULL WORD OR THE GAME BREAKS")
+    
     choice = gets.chomp()
     case choice
     when "cavalry"
@@ -346,7 +392,31 @@ def roman_nervii_ambush(name, supplies, health)
       supplies = inventory(supplies, "horse")
       gets
       system("clear")
+    when "c"
+      choice = "cavalry"
+      action_prompt("You have joined the cavalry.")
+      action_prompt("You are now in possesion of a horse.")
+      supplies = inventory(supplies, "horse")
+      gets
+      system("clear")
+    when "C"
+      choice = "cavalry"
+      action_prompt("You have joined the cavalry.")
+      action_prompt("You are now in possesion of a horse.")
+      supplies = inventory(supplies, "horse")
+      gets
+      system("clear")
     when "infantry"
+      action_prompt("You have joined the infantry.")
+      gets
+      system("clear")
+    when "i"
+      choice = "infantry"
+      action_prompt("You have joined the infantry.")
+      gets
+      system("clear")
+    when "I"
+      choice = "infantry"
       action_prompt("You have joined the infantry.")
       gets
       system("clear")
@@ -403,6 +473,38 @@ def roman_archery_battle(name, supplies, health)
   speaking_prompt("The ambush by Gallic tribes at the river Sambre brought the Romans a hardwon victory...")
   gets
   system("clear")
+
+  loop do 
+    speaking_prompt("Would you like to stop by the medic tent? (y/n press h to check your health)")
+    choice = gets.chomp()
+
+    case choice
+    when "y"
+      speaking_prompt("You go into the medic tent, and have your wounds tended.")
+      health += 30
+      action_prompt("Your health is now #{health} HP") 
+      break
+    when "Y"
+      speaking_prompt("You go into the medic tent, and have your wounds tended.")
+      health += 30
+      action_prompt("Your health is now #{health} HP") 
+      break
+    when "n"
+      speaking_prompt("You decide to power through the next battle without medical attention.")
+      action_prompt("Your health is still #{health} HP") 
+      break
+    when "N"
+      speaking_prompt("You decide to power through the next battle without medical attention.")
+      action_prompt("Your health is still #{health} HP") 
+      break
+    when "H"
+      action_prompt("Your health is #{health} HP")
+    when "h"
+      action_prompt("Your health is #{health} HP")
+    else 
+      speaking_prompt("You must decide.")
+    end
+  end
 
   speaking_prompt("Your commander has decided that the best way to defeat the physically imposing Gauls with their longswords is with archers.")
   action_prompt("You have been given a bow and arrow.")
@@ -478,7 +580,7 @@ def strategy_meeting(name, supplies, health)
   gets()
   system("clear")
   ascii_caesar
-  speaking_prompt("Caesar: We all live by the same rules. Shall I let you decide whether it is my right to conquer any Gaullic land?")
+  speaking_prompt("Caesar: We all live by the same rules. Shall I let you decide whether it is my right to conquer any Gallic land?")
   gets()
   system("clear")
   ascii_ariovistus
@@ -499,7 +601,7 @@ def strategy_meeting(name, supplies, health)
     decicion =  gets.chomp()
 
     case decicion
-    when "y" || "Y"
+    when "y"
       puts()
       speaking_prompt("Ariovistus's proposal to establish dominion in the name of Caesar has been accepted.")
       gets()
@@ -509,7 +611,24 @@ def strategy_meeting(name, supplies, health)
       speaking_prompt("Julius Caesar instead turns his attention to the sea, in the Gulf of Morbihan.")
       gets()
       break
-    when "n" || "N"
+    when "Y"
+      puts()
+      speaking_prompt("Ariovistus's proposal to establish dominion in the name of Caesar has been accepted.")
+      gets()
+      action_prompt("You've been given a peace treaty with Ariovistus")
+      gets()
+      supplies = inventory(supplies, "treaty with Ariovistus")
+      speaking_prompt("Julius Caesar instead turns his attention to the sea, in the Gulf of Morbihan.")
+      gets()
+      break
+    when "N"
+      puts()
+      speaking_prompt("You've advised Julius Caesar that accepting this proposal would make him appear weak to Gauls, 
+      and to his political rivals in Rome.")
+      gets()
+      health = battle_of_vosges(name, supplies, health)
+      break
+    when "n"
       puts()
       speaking_prompt("You've advised Julius Caesar that accepting this proposal would make him appear weak to Gauls, 
       and to his political rivals in Rome.")
@@ -618,22 +737,61 @@ def fight(player_health, supplies, enemy_health)
       speaking_prompt("You see an opening to attack.")
 
       loop do 
-        speaking_prompt("Do you aim for the legs, head, arms, or chest?")
-        speaking_prompt("TYPE THE FULL WORD OR THE GAME BREAKS")
-        aim = gets.chomp
-        case aim 
-        when "legs"
-          hit_box("legs")
-        when "head"
-          hit_box("head")
-        when "arms"
-          hit_box("arms")
-        when "chest"
-          hit_box("chest")
-        else
-          speaking_prompt("Please select the full word of the body part you're aiming for.")
+        aim = ""
+        loop do 
+          speaking_prompt("Do you aim for the 'legs', 'head', 'arms', or 'chest'?")
+          
+          aim = gets.chomp
+          case aim 
+          when "legs"
+            hit_box("legs")
+            break
+          when "l"
+            aim = "legs"
+            hit_box("legs")
+            break
+          when "L"
+            aim = "legs"
+            hit_box("legs")
+            break
+          when "head"
+            hit_box("head")
+            break
+          when "h"
+            aim = "head"
+            hit_box("head")
+            break
+          when "H"
+            aim = "head"
+            hit_box("head")
+            break
+          when "arms"
+            hit_box("arms")
+            break
+          when "a"
+            aim = "arms"
+            hit_box("arms")
+            break
+          when "A"
+            aim = "arms"
+            hit_box("arms")
+            break
+          when "chest"
+            hit_box("chest")
+            break
+          when "c"
+            aim = "chest"
+            hit_box("chest")
+            break
+          when "C"
+            aim = "chest"
+            hit_box("chest")
+            break
+          else
+            speaking_prompt("Please select the full word of the body part you're aiming for.")
+          end
         end
-      
+        
 
         if hit_box(aim)
           system("clear")
@@ -656,12 +814,14 @@ def fight(player_health, supplies, enemy_health)
       aim = %w(arms legs chest head).sample
       system("clear")
       speaking_prompt("The enemy attacks, and aims for your #{aim}.")
+      gets()
       
       if hit_box(aim)
         damage = (0..enemy_damage).to_a.sample
         action_prompt("The enemy dealt #{damage} damage.")
         player_health = player_health - damage
         speaking_prompt("Your health is #{player_health} HP.")
+        gets()
       else
         action_prompt("You parried")
         gets()
@@ -691,24 +851,71 @@ def cavalry_fight(player_health, supplies, enemy_health)
       system("clear")
       speaking_prompt("You see an opening to attack.")
 
-      loop do 
-        speaking_prompt("Do you aim for the legs, head, arms, or chest with your sword, or trample the enemy with your horse?")
-        speaking_prompt("type 'legs', 'head', 'arms', 'chest' or 'trample'")
-        speaking_prompt("TYPE THE FULL WORD OR THE GAME BREAKS")
-        aim = gets.chomp
-        case aim 
-        when "legs"
-          hit_box("legs")
-        when "head"
-          hit_box("head")
-        when "arms"
-          hit_box("arms")
-        when "chest"
-          hit_box("chest")
-        when "trample"
-          hit_box("trample")
-        else
-          speaking_prompt("Please select the full word of the body part you're aiming for.")
+      loop do
+        aim = "" 
+        loop do 
+          speaking_prompt("Do you aim for the legs', 'head', 'arms', or 'chest', or do you 'trample' with your horse?")
+          
+          aim = gets.chomp
+          case aim 
+          when "legs"
+            hit_box("legs")
+            break
+          when "l"
+            aim = "legs"
+            hit_box("legs")
+            break
+          when "L"
+            aim = "legs"
+            hit_box("legs")
+            break
+          when "head"
+            hit_box("head")
+            break
+          when "h"
+            aim = "head"
+            hit_box("head")
+            break
+          when "H"
+            aim = "head"
+            hit_box("head")
+            break
+          when "arms"
+            hit_box("arms")
+            break
+          when "a"
+            aim = "arms"
+            hit_box("arms")
+            break
+          when "A"
+            aim = "arms"
+            hit_box("arms")
+            break
+          when "chest"
+            hit_box("chest")
+            break
+          when "c"
+            aim = "chest"
+            hit_box("chest")
+            break
+          when "C"
+            aim = "chest"
+            hit_box("chest")
+            break
+          when "trample"
+            hit_box("trample")
+            break
+          when "t"
+            aim = "trample"
+            hit_box("trample")
+            break
+          when "T"
+            aim = "trample"
+            hit_box("trample")
+            break
+          else
+            speaking_prompt("Please select the full word of the body part you're aiming for.")
+          end
         end
       
 
@@ -743,6 +950,7 @@ def cavalry_fight(player_health, supplies, enemy_health)
     else
       aim = %w(arms legs chest head).sample
       speaking_prompt("The enemy attacks, and aims for your #{aim}.")
+      gets()
       
       if hit_box(aim)
         system("clear")
@@ -750,6 +958,7 @@ def cavalry_fight(player_health, supplies, enemy_health)
         action_prompt("The enemy dealt #{damage} damage.")
         player_health = player_health - damage
         speaking_prompt("Your health is #{player_health} HP.")
+        gets()
       else
         action_prompt("You parried")
         gets()
@@ -776,22 +985,60 @@ def archery_fight(player_health, supplies, enemy_health)
       speaking_prompt("You fire another arrow.")
 
       loop do 
-        speaking_prompt("Do you aim for the legs, head, arms, or chest?")
-        speaking_prompt("TYPE THE FULL WORD OR THE GAME BREAKS")
-        aim = gets.chomp
-        case aim 
-        when "legs"
-          hit_box("legs")
-        when "head"
-          hit_box("head")
-        when "arms"
-          hit_box("arms")
-        when "chest"
-          hit_box("chest")
-        else
-          speaking_prompt("Please select the full word of the body part you're aiming for.")
+        aim = ""
+        loop do 
+          speaking_prompt("Do you aim for the 'legs', 'head', 'arms', or 'chest'?")
+          
+          aim = gets.chomp
+          case aim 
+          when "legs"
+            hit_box("legs")
+            break
+          when "l"
+            aim = "legs"
+            hit_box("legs")
+            break
+          when "L"
+            aim = "legs"
+            hit_box("legs")
+            break
+          when "head"
+            hit_box("head")
+            break
+          when "h"
+            aim = "head"
+            hit_box("head")
+            break
+          when "H"
+            aim = "head"
+            hit_box("head")
+            break
+          when "arms"
+            hit_box("arms")
+            break
+          when "a"
+            aim = "arms"
+            hit_box("arms")
+            break
+          when "A"
+            aim = "arms"
+            hit_box("arms")
+            break
+          when "chest"
+            hit_box("chest")
+            break
+          when "c"
+            aim = "chest"
+            hit_box("chest")
+            break
+          when "C"
+            aim = "chest"
+            hit_box("chest")
+            break
+          else
+            speaking_prompt("Please select the full word of the body part you're aiming for.")
+          end
         end
-      
 
         if hit_box(aim)
           system("clear")
@@ -814,12 +1061,14 @@ def archery_fight(player_health, supplies, enemy_health)
       aim = %w(arms legs chest head).sample
       system("clear")
       speaking_prompt("The enemy retailiates, and aims for your #{aim}.")
+      gets()
       
       if hit_box(aim)
         damage = (0..enemy_damage).to_a.sample
         action_prompt("The enemy dealt #{damage} damage.")
         player_health = player_health - damage
         speaking_prompt("Your health is #{player_health} HP.")
+        gets()
       else
         action_prompt("You lift your shield, and take cover from enemy fire.")
         gets()
@@ -869,23 +1118,41 @@ def roman_game(name, supplies, health)
       when  "help"
         help_message
         gets()
-      when "i" || "I"
+      when "i"
         speaking_prompt("In your possession, you have #{supplies}")
         gets()
-      when "h" || "H"
+      when "I"
+        speaking_prompt("In your possession, you have #{supplies}")
+        gets()
+      when "H"
         speaking_prompt("You have #{health} HP.")
         gets()
-      when "s" || "S"
+      when "h"
+        speaking_prompt("You have #{health} HP.")
+        gets()
+      when "S"
         speaking_prompt("Your fellow soldiers are listening to your commander's speech.")
         gets
         system("clear")
-      when "v" || "V"
+      when "s"
+        speaking_prompt("Your fellow soldiers are listening to your commander's speech.")
+        gets
+        system("clear")
+      when "V"
         speaking_prompt("The sky is dotted by arrows, enemy legions fill the horizon, black and buzzing with the sounds of war.")
         gets
         system("clear")
-      when "i" || "I"
+      when "v"
+        speaking_prompt("The sky is dotted by arrows, enemy legions fill the horizon, black and buzzing with the sounds of war.")
+        gets
+        system("clear")
+      when "i"
         speaking_prompt("In your possession, you have #{supplies}")
-      when "n" || "N"
+      when "I"
+        speaking_prompt("In your possession, you have #{supplies}")
+      when "n"
+        break
+      when "N"
         break
       else
         speaking_prompt("Would you like to speak to your fellow soldiers (S), view your surroundings (V), or view your inventory (I)?")
@@ -901,12 +1168,16 @@ def roman_game(name, supplies, health)
       case action 
       when  "help"
         help_message
-      when "i" || "I"
+      when "i"
         speaking_prompt("In your possession, you have #{supplies}")
-      when "h" || "H"
+      when "I"
+        speaking_prompt("In your possession, you have #{supplies}")
+      when "h"
+        speaking_prompt("You have #{health} HP.")
+      when "H"
         speaking_prompt("You have #{health} HP.")
 
-      when "y" || "Y"
+      when "y"
         system("clear")
         speaking_prompt("... countrymen, lend me your ears; ")
         gets
@@ -925,8 +1196,28 @@ def roman_game(name, supplies, health)
         gets()
         system("clear")
         break
-
-      when "n" || "N"
+      when "Y"
+        system("clear")
+        speaking_prompt("... countrymen, lend me your ears; ")
+        gets
+        puts("We've come to bury the Gauls, not to bring many captives home to Rome.")
+        gets
+        puts("The evil that men do lives after them;")
+        gets
+        puts("The good is oft interred with their bones;")
+        gets
+        puts("So let it be with the Gauls")
+        gets
+        puts()
+        action_prompt("This speech inspires you")
+        health += 10
+        action_prompt("Your HP has increased by 10 points (it is now #{health.to_s})")
+        gets()
+        system("clear")
+        break
+      when "N"
+        break
+      when "n"
         break
       else
         ("Must select Y or N")
@@ -987,9 +1278,6 @@ end
 
 ########## introduction ##########
 
-ending_ceremonies("Angus", [])
-gets() 
-
 credits()
 intro()
 gametips()
@@ -997,7 +1285,6 @@ puts("")
 speaking_prompt("Welcome to Bellum Romanum")
 gets
 system("clear")
-
 
 ########## choose allegiance ##########
 

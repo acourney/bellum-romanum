@@ -111,9 +111,6 @@ end
 
 def gametips()
   speaking_prompt("Follow the prompts to continue your fight in this war. 
-  You can always press H to check your health, 
-  I to check your inventory,
-  or type help to view this message.
   To quit the game at any time, press ^z.
   To win the game you must win 5 battles in the Gallic war.
   
@@ -125,7 +122,7 @@ def gametips()
 end
 
 def credits()
-
+  system("clear")
   puts("     an ")
   puts("           ____    _____                       ")
   puts("    /\\   / ____|  / ____|                      ")
@@ -250,13 +247,17 @@ def roman_battle_1(name, supplies, health)
       speaking_prompt("You have #{health} HP.")
     when "l" || "L"
       speaking_prompt("As you get closer this soldier looms larger and larger.")
+      gets()
       health = fight(health, supplies, 50)
       speaking_prompt("You left that battle with #{health} HP.")
+      gets()
       break
     when "r" || "R"
       speaking_prompt("This soldier is smaller than he seemed from afar.")
+      gets()
       health = fight(health, supplies, 30)
       speaking_prompt("You left that battle with #{health} HP.")
+      gets()
       break
     when "e" || "E"
       speaking_prompt("You take this chance to escape")
@@ -415,6 +416,8 @@ def roman_archery_battle(name, supplies, health)
     gets()
     health = archery_fight(health, supplies, 50)
     system("clear")
+    speaking_prompt("You left that battle with #{health} HP.")
+    gets()
   else
     action_prompt("You took too long to fire, and missed.")
     gets()
@@ -422,6 +425,8 @@ def roman_archery_battle(name, supplies, health)
     gets()
     system("clear")
     health = fight(health, supplies, 50)
+    speaking_prompt("You left that battle with #{health} HP.")
+    gets()
   end
 
   system 'clear'
@@ -486,6 +491,8 @@ def strategy_meeting(name, supplies, health)
       speaking_prompt("You've advised Julius Caesar that accepting this proposal would make him appear weak to Gauls, 
       and to his political rivals in Rome.")
       gets()
+      health = battle_of_vosges(name, supplies, health)
+      break
     else
       speaking_prompt("You must make a decision.")
     end
@@ -715,6 +722,75 @@ end
 ########## bow and arrow fight ##########
 
 def archery_fight(player_health, supplies, enemy_health)
+  player_damgage = 15
+  enemy_damage = 10
+  
+  loop do
+    first_strike = ["player", "enemy"].sample
+    if first_strike == "player"
+      system("clear")
+      speaking_prompt("You fire another arrow.")
+
+      loop do 
+        speaking_prompt("Do you aim for the legs, head, arms, or chest?")
+        speaking_prompt("TYPE THE FULL WORD OR THE GAME BREAKS")
+        aim = gets.chomp
+        case aim 
+        when "legs"
+          hit_box("legs")
+        when "head"
+          hit_box("head")
+        when "arms"
+          hit_box("arms")
+        when "chest"
+          hit_box("chest")
+        else
+          speaking_prompt("Please select the full word of the body part you're aiming for.")
+        end
+      
+
+        if hit_box(aim)
+          system("clear")
+          action_prompt("You aim for the enemy's #{aim}.")
+          damage = (0..player_damgage).to_a.sample
+          action_prompt("You deal #{damage} damage.")
+          enemy_health = enemy_health - damage
+          speaking_prompt("The enemy is at #{enemy_health} HP.")
+          gets()
+          break
+        else
+          action_prompt("You missed.")
+          gets()
+          break
+        end
+      end
+
+
+    else
+      aim = %w(arms legs chest head).sample
+      system("clear")
+      speaking_prompt("The enemy retailiates, and aims for your #{aim}.")
+      
+      if hit_box(aim)
+        damage = (0..enemy_damage).to_a.sample
+        action_prompt("The enemy dealt #{damage} damage.")
+        player_health = player_health - damage
+        speaking_prompt("Your health is #{player_health} HP.")
+      else
+        action_prompt("You lift your shield, and take cover from enemy fire.")
+        gets()
+      end
+      
+    end
+
+    break if player_health <= 0 || enemy_health <= 0
+    
+  end
+  player_health
+end
+
+def battle_of_vosges(name, supplies, health)
+  puts("here is the battle between Ariovistus and Caesar")
   health
 end
 
@@ -748,11 +824,13 @@ def roman_game(name, supplies, health)
       case action
       when  "help"
         help_message
+        gets()
       when "i" || "I"
         speaking_prompt("In your possession, you have #{supplies}")
+        gets()
       when "h" || "H"
         speaking_prompt("You have #{health} HP.")
-
+        gets()
       when "s" || "S"
         speaking_prompt("Your fellow soldiers are listening to your commander's speech.")
         gets
@@ -784,12 +862,19 @@ def roman_game(name, supplies, health)
       when "h" || "H"
         speaking_prompt("You have #{health} HP.")
 
-      when  "y" || "Y"
-        speaking_prompt("... countrymen, lend me your ears;
-        We've come to bury the Gauls, not to bring many captives home to Rome.
-        The evil that men do lives after them;
-        The good is oft interred with their bones;
-        So let it be with the Gauls")
+      when "y" || "Y"
+        system("clear")
+        speaking_prompt("... countrymen, lend me your ears; ")
+        gets
+        puts("We've come to bury the Gauls, not to bring many captives home to Rome.")
+        gets
+        puts("The evil that men do lives after them;")
+        gets
+        puts("The good is oft interred with their bones;")
+        gets
+        puts("So let it be with the Gauls")
+        gets
+        puts()
         action_prompt("This speech inspires you")
         health += 10
         action_prompt("Your HP has increased by 10 points (it is now #{health.to_s})")

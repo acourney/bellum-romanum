@@ -2,6 +2,10 @@ require 'pry'
 
 VALID_ALLEGIANCES = ["Gaul", "Rome", "gaul", "rome", "Roman",  "roman", "r", "g", "R", "G"]
 
+##############################################################################################################################################################
+##################################### ascii art, credits, introduction #######################################################################################
+##############################################################################################################################################################
+
 def ascii_ariovistus()
   puts("                                                                                            _,..---''-.,         ")
   puts("                                                                                            ,-`,-.         `,         ")
@@ -45,7 +49,6 @@ def ascii_caesar()
   puts("       |, ,;, ,`-._\\ ")
 end
 
-
 def navy_battle_ascii()
   puts(" ")
   puts("   __|__ |___| |\                   /|\          ")    
@@ -58,7 +61,6 @@ def navy_battle_ascii()
   puts(" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  ")
   puts("    ~~~~~~ ~    ~~~~~~     ~~    ~    ~~~~~   ~~~")
 end
-
 
 def roman_ascii()
   puts("    _.-\"\"}      ")
@@ -163,16 +165,6 @@ def credits()
   system("clear")
 end
 
-
-
-def speaking_prompt(message)
-  puts("==> #{message}")
-end
-
-def action_prompt(message)
-  puts("** #{message} **")
-end
-
 def intro()
   system("clear")
   puts("In the year 58 BC...")
@@ -212,9 +204,32 @@ def intro()
   system("clear")
 end
 
+##############################################################################################################################################################
+##################################### speaking and action prompts, inventory #################################################################################
+##############################################################################################################################################################
+
+def speaking_prompt(message)
+  puts("==> #{message}")
+end
+
+def action_prompt(message)
+  puts("** #{message} **")
+end
+
 def inventory(supplies, item)
   supplies << item
 end
+
+##############################################################################################################################################################
+##############################################################################################################################################################
+##############################################################################################################################################################
+
+##############################################################################################################################################################
+##################################### battle methods #########################################################################################################
+##############################################################################################################################################################
+
+
+########## introductory battle ##########
 
 def roman_battle_1(name, supplies, health)
   speaking_prompt("The first battle begins.")
@@ -253,6 +268,8 @@ def roman_battle_1(name, supplies, health)
   end
   health 
 end
+
+########## cavalry battle/ambush battle ##########
 
 def roman_nervii_ambush(name, supplies, health)
   speaking_prompt("You've won your first battle, and your company makes its way north.")
@@ -356,6 +373,8 @@ def roman_nervii_ambush(name, supplies, health)
   health
 end
 
+########## archery battle ##########
+
 def roman_archery_battle(name, supplies, health)
   speaking_prompt("The ambush by Gallic tribes at the river Sambre brought the Romans a hardwon victory...")
   gets
@@ -392,19 +411,24 @@ def roman_archery_battle(name, supplies, health)
 
   if (time2.sec - time1.sec) <= 1
     # binding.pry
-    puts("you aim for an enemy soldier")
+    action_prompt("You aim for enemy soldiers.")
     gets()
+    health = archery_fight(health, supplies, 50)
+    system("clear")
   else
-    puts("you took too long to fire, and missed")
+    action_prompt("You took too long to fire, and missed.")
     gets()
+    speaking_prompt("Enemy soldiers are rushing your front line, and you begin to fight in sword combat.")
+    gets()
+    system("clear")
+    health = fight(health, supplies, 50)
   end
 
   system 'clear'
-
-
+  health
 end
 
-
+########## ariovistus battle/ strategy battle ##########
 
 def strategy_meeting(name, supplies, health)
   system("clear")
@@ -470,14 +494,20 @@ def strategy_meeting(name, supplies, health)
   health
 end
 
-
+########## naval battle ##########
 
 def gulf_of_morbihan(name, supplies, health)
   puts("This will be a naval battle")
   health
 end
 
+##############################################################################################################################################################
+##############################################################################################################################################################
+##############################################################################################################################################################
 
+##############################################################################################################################################################
+################################# ending ceremony ############################################################################################################
+##############################################################################################################################################################
 
 def ending_ceremonies(name, supplies)
   if supplies.include?("treaty with Ariovistus")
@@ -492,6 +522,17 @@ def ending_ceremonies(name, supplies)
     exit
   end
 end
+
+##############################################################################################################################################################
+##############################################################################################################################################################
+##############################################################################################################################################################
+
+##############################################################################################################################################################
+################################# fighting methods ###########################################################################################################
+##############################################################################################################################################################
+
+
+########## hit box ##########
 
 def hit_box(body_part)
   hit = false
@@ -508,6 +549,8 @@ def hit_box(body_part)
     hit = true
   end
 end
+
+########## sword fight ##########
 
 def fight(player_health, supplies, enemy_health)
   player_damgage = 10
@@ -581,6 +624,7 @@ def fight(player_health, supplies, enemy_health)
   player_health
 end
 
+########## cavalry fight ##########
 
 def cavalry_fight(player_health, supplies, enemy_health)
   player_damgage = 15
@@ -668,8 +712,26 @@ def cavalry_fight(player_health, supplies, enemy_health)
   player_health
 end
 
+########## bow and arrow fight ##########
+
+def archery_fight(player_health, supplies, enemy_health)
+  health
+end
+
+##############################################################################################################################################################
+##############################################################################################################################################################
+##############################################################################################################################################################
+
+
+
+##############################################################################################################################################################
+####################################################   M A I N   G A M E   ###################################################################################
+##############################################################################################################################################################
+
 def roman_game(name, supplies, health)
   health = 100
+
+#################### the war begins ####################
 
   speaking_prompt("So the war begins... You fight for your leader, Julius Caesar")
   speaking_prompt("In order to return to Rome with all the rights of a true Roman citizen, you must sucessfully
@@ -742,23 +804,25 @@ def roman_game(name, supplies, health)
       end
     end
 
-    # if health > 0
-    #   health = roman_battle_1(name, supplies, health)
-    # else
-    #   speaking_prompt("You have honorably died defending your empire.")
-    # end
+#################### entering the battles ####################
 
-    # if health > 0
-    #   health = roman_nervii_ambush(name, supplies, health)
-    # else
-    #   speaking_prompt("You have honorably died defending your empire.")
-    # end  
+    if health > 0
+      health = roman_battle_1(name, supplies, health)
+    else
+      speaking_prompt("You have honorably died defending your empire.")
+    end
 
-    # if health > 0
-    #   health = roman_archery_battle(name, supplies, health)
-    # else
-    #   speaking_prompt("You have honorably died defending your empire.")
-    # end  
+    if health > 0
+      health = roman_nervii_ambush(name, supplies, health)
+    else
+      speaking_prompt("You have honorably died defending your empire.")
+    end  
+
+    if health > 0
+      health = roman_archery_battle(name, supplies, health)
+    else
+      speaking_prompt("You have honorably died defending your empire.")
+    end  
 
     if health > 0 
       health =  strategy_meeting(name, supplies, health)
@@ -783,12 +847,19 @@ def roman_game(name, supplies, health)
 
 end
 
+##############################################################################################################################################################
+##############################################################################################################################################################
+##############################################################################################################################################################
+
+##############################################################################################################################################################
+##################################   C A L L I N G   A L L   M E T H O D S   #################################################################################
+##############################################################################################################################################################
 
 
 ########## introduction ##########
 credits()
 intro()
-# gametips()
+gametips()
 puts("")
 speaking_prompt("Welcome to Bellum Romanum")
 gets

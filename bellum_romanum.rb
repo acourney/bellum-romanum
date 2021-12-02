@@ -2,6 +2,50 @@ require 'pry'
 
 VALID_ALLEGIANCES = ["Gaul", "Rome", "gaul", "rome", "Roman",  "roman", "r", "g", "R", "G"]
 
+def ascii_ariovistus()
+puts("                                                                                            _,..---''-.,         ")
+puts("                                                                                            ,-`,-.         `,         ")
+puts("                                                                                           /  / _/           \         ")
+puts("                                                                                          /___//_____,--.     ,         ")
+puts("                                                                                          /     __,..--'||     |         ")
+puts("                                                                                          `T`7 //,-',  //      |         ")
+puts("                                                                                          )/_//  `'  //       |         ")
+puts("                                                                                          |`-`      <<,       /         ")
+puts("                                                                                          \ _        `,\     /         ")
+puts("                                                                                           |)`',       \\___/         ")
+puts("                                                                                           \`~~       , `--'         ")
+puts("                                                                                           |     ,.-'     |         ")
+puts("                                                                                             `--,`         \  _         ")
+puts("                                                                                         ,-'`)T(            >` `--..,         ")
+puts("                                                                                       ,'`   //\_\        ,/`         `-,         ")
+puts("                                                                                      (  ___/   /`-....--<               `,         ")
+puts("                                                                                      /`  /\__/\__,/     >._              )         ")
+puts("                                                                                     /   |__/\__/  \____/\  `-,-.____,.--'\         ")
+
+end
+
+def ascii_caesar()
+puts("          ___       ")
+puts("          \\||      ")
+puts("         ,'_,-\     ")
+puts("         ;'____\    ")
+puts("         || =\=|    ")
+puts("         ||  - |    ")                           
+puts("     ,---'._--''-,, ")   
+puts("    / `-._- _--/,,| ")            
+puts("   /-._,  `-.__;,,|'")                           
+puts("  /   ;\      / , ; ")                           
+puts(" /  ,' | _ - ',/, ;")
+puts("(  (   |     /, ,,;")
+puts(" \  \  |     ',,/,;")
+puts("  \  \ |    /, / ,;")
+puts(" (| ,^.|   / ,, ,/;")
+puts("  `-'./ `-._,, ,/,;")
+puts("       �-._ `-._,,;")
+puts("       |/,,`-._ `-.")
+puts("       |, ,;, ,`-._\ ")
+end
+
 def valid_name?(string)
   alphabet = ('a'..'z').to_a << ('A'..'Z').to_a
   alphabet.flatten!
@@ -311,13 +355,102 @@ def roman_archery_battle(name, supplies, health)
     puts("you aim for an enemy soldier")
     gets()
   else
-    puts("you took too long to  fire, and missed")
+    puts("you took too long to fire, and missed")
     gets()
   end
 
   system 'clear'
 
 
+end
+
+
+
+def strategy_meeting(name, supplies, health)
+  system("clear")
+  speaking_prompt("Your legion has been heading to Vesontio, a large Gallic town, with plans to conquer it.")
+  gets()
+  speaking_prompt("Enroute, Julius Caesar was invited to a meeting with German King, Ariovistus, who also planned to conquer this territory.")
+  gets
+  speaking_prompt("Your presence has been requested to plan and attend a parley between the two leaders.")
+  gets()
+  system("clear")
+
+
+  speaking_prompt("You arrive at a small knoll outside of Vesontio to see Ariovistus and his small legion of escorts.")
+  gets()
+
+  ####### some visuals, ascii art of peoples faces would be nice here #######
+  ascii_ariovistus
+  speaking_prompt("Ariovistus: Dear friend and ally, I have come here to conquer this land. As a Gaul it is my right to conquer any Gallic lands.")
+  gets()
+  system("clear")
+  ascii_caesar
+  speaking_prompt("Caesar: We all live by the same rules. Shall I let you decide whether it is my right to conquer any Gaullic land?")
+  gets()
+  system("clear")
+  ascii_ariovistus
+  speaking_prompt("Ariovistus: So... was this meeting just a pretense for you coming here to crush me?")
+  gets()
+  system("clear")
+  ascii_ariovistus
+  speaking_prompt("Ariovistus: You can take your armies out of this country right now. I will be happy to rule this land in your name...")
+  gets()
+  system("clear")
+  ascii_ariovistus
+  speaking_prompt("Ariovistus: Anytime you need a favor you won't even have to lift a finger. But, I will conquer this land.")
+  gets()
+  system("clear")
+  
+  loop do 
+    speaking_prompt("Caesar turns to you and asks whether he should accept this proposal. (y/n)")
+    decicion =  gets.chomp()
+
+    case decicion
+    when "y" || "Y"
+      puts()
+      speaking_prompt("Ariovistus's proposal to establish dominion in the name of Caesar has been accepted.")
+      gets()
+      action_prompt("You've been given a peace treaty with Ariovistus")
+      gets()
+      supplies = inventory(supplies, "treaty with Ariovistus")
+      speaking_prompt("Julius Caesar instead turns his attention to the sea, in the Gulf of Morbihan.")
+      gets()
+      break
+    when "n" || "N"
+      puts()
+      speaking_prompt("You've advised Julius Caesar that accepting this proposal would make him appear weak to Gauls, 
+      and to his political rivals in Rome.")
+      gets()
+    else
+      speaking_prompt("You must make a decision.")
+    end
+
+  end
+  health
+end
+
+
+
+def gulf_of_morbihan(name, supplies, health)
+  puts("This will be a naval battle")
+  health
+end
+
+
+
+def ending_ceremonies(name, supplies)
+  if supplies.include?("treaty with Ariovistus")
+    puts("As you arrive in Rome, you see Pompey and Crassus welcoming Julius Caesar back to Rome.")
+    puts("Because you created a treaty with the Gauls rather than conquer more land for Rome, Julius Caesar has lost his power in Rome.")
+    puts("For you, and for Julius Caesar, this war has ended.")
+    exit
+  else
+    puts("You return to Rome in a triumph")
+    puts("Julius Casear himself places a laurel on your head for your help in the Gallic Wars.")
+    action_prompt("insert some ascii art of Rome here.")
+    exit
+  end
 end
 
 def hit_box(body_part)
@@ -581,11 +714,29 @@ def roman_game(name, supplies, health)
     #   speaking_prompt("You have honorably died defending your empire.")
     # end  
 
-    if health > 0
-      health = roman_archery_battle(name, supplies, health)
+    # if health > 0
+    #   health = roman_archery_battle(name, supplies, health)
+    # else
+    #   speaking_prompt("You have honorably died defending your empire.")
+    # end  
+
+    if health > 0 
+      health =  strategy_meeting(name, supplies, health)
+    else 
+      speaking_prompt("You have honorably died defending your empire.")
+    end
+
+    if health > 0 
+      health = gulf_of_morbihan(name, supplies, health)
     else
       speaking_prompt("You have honorably died defending your empire.")
-    end  
+    end
+
+    if health > 0 
+      health = ending_ceremonies(name, supplies)
+    else
+      speaking_prompt("You have honorably died defending your empire.")
+    end
     
     break if gets.chomp() == "N" || "n"
   end

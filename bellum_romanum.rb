@@ -194,7 +194,7 @@ def credits()
   puts(" Producer                                   Special Thanks To          ")
   puts("      Annie Courney                              Dan Carlin            ")
   puts("                                                 Julius Caesar         ")
-  puts("                                                 Vercingetorix         ")
+  puts("                                                 Ariovistus            ")
   puts(" Playtester                                                            ")
   puts("      Annie Courney                                                    ")
   puts("                                                                       ")
@@ -584,9 +584,9 @@ end
 
 def strategy_meeting(name, supplies, health)
   system("clear")
-  speaking_prompt("Your legion has been heading to Vesontio, a large Gallic town, with plans to conquer it.")
+  speaking_prompt("Your legion has been heading to Vesontio, a large Gallic town, with plans to conquer it before Ariovistus does.")
   gets()
-  speaking_prompt("Enroute, Julius Caesar was invited to a meeting with German King, Ariovistus, who also planned to conquer this territory.")
+  speaking_prompt("Enroute, Julius Caesar was invited to a meeting with German King, Ariovistus.")
   gets
   speaking_prompt("Your presence has been requested to plan and attend a parley between the two leaders.")
   gets()
@@ -636,7 +636,7 @@ def strategy_meeting(name, supplies, health)
       action_prompt("You've been given a peace treaty with Ariovistus")
       gets()
       supplies = inventory(supplies, "treaty with Ariovistus")
-      speaking_prompt("Julius Caesar instead turns his attention to the sea, in the Gulf of Morbihan.")
+      speaking_prompt("Julius Caesar instead turns his attention back to Rome, happy to return with an agreement with Ariovistus.")
       gets()
       break
     when "Y"
@@ -646,7 +646,7 @@ def strategy_meeting(name, supplies, health)
       action_prompt("You've been given a peace treaty with Ariovistus")
       gets()
       supplies = inventory(supplies, "treaty with Ariovistus")
-      speaking_prompt("Julius Caesar instead turns his attention to the sea, in the Gulf of Morbihan.")
+      speaking_prompt("Julius Caesar instead turns his attention back to Rome, happy to return with an agreement with Ariovistus.")
       gets()
       break
     when "N"
@@ -1149,6 +1149,7 @@ def battle_of_vosges(name, supplies, health)
   # speaking_prompt("he would feel what the invincible Germans, well‐trained beyond all others to arms, who for fourteen years had not been beneath a
   # roof, could achieve by their valor.")
   speaking_prompt("Both sides have left the knoll.")
+  gets()
   speaking_prompt("A great a panic suddenly seizes the whole Roman army, who must now fight the imposing German army")
   gets()
   system("clear")
@@ -1180,7 +1181,7 @@ def battle_of_vosges(name, supplies, health)
       break
     when'y'
       system("clear")
-      ascii_battle_caesar
+      ascii_battle_caesar()
       speaking_prompt("If, driven on by rage and madness, Ariovistus should make war upon us")
       gets
       speaking_prompt("what, after all are you afraid of? Why should you despair either of your own valor or of Caesar's zeal?") 
@@ -1248,7 +1249,7 @@ def battle_of_vosges(name, supplies, health)
   end
 
   loop do
-    speaking_prompt("Ariovisuts has made camp two miles miles behind Caesar, thus cutting off his communication and supply lines with the allied tribes.")
+    speaking_prompt("Ariovistus has made camp two miles miles behind Caesar, thus cutting off his communication and supply lines with the allied tribes.")
     speaking_prompt("Should you try to entice Ariovistus into battle (b), or erect (e) a second camp built near Ariovistus' position to cut of his supplies?")
     build_camp = gets.chomp()
 
@@ -1290,7 +1291,7 @@ def battle_of_vosges(name, supplies, health)
 
     case formation
     when "p"
-      speaking_prompt("You advise Caesar that he should put Publius Crassus in charge of a triplex axis.")
+      speaking_prompt("You advise Caesar that he should put Publius Crassus in charge of a triplex acies.")
       gets()
       speaking_prompt("Caesar lines up on the right flank, while Crassus leads a charge on Ariovistus")
       gets()
@@ -1361,7 +1362,7 @@ def roman_game(name, supplies, health)
 
   speaking_prompt("So the war begins... You fight for your leader, Julius Caesar")
   speaking_prompt("In order to return to Rome with all the rights of a true Roman citizen, you must sucessfully
-  fight in five battles against Rome's enemy, the Gauls")
+  fight in three battles against Rome's enemy, the Gauls")
   gets
   system("clear")
   loop do 
@@ -1501,19 +1502,27 @@ def roman_game(name, supplies, health)
       speaking_prompt("You have honorably died defending your empire.")
     end  
 
+    speaking_prompt("You've successfully won 3 battles against the Gauls.")
+    gets()
+    speaking_prompt("However, Julius Caesar has heard word that his former ally, Ariovistus, is heading south of the Rhine, toward Roman territories...")
+    gets()
+
     if health > 0 
       health =  strategy_meeting(name, supplies, health)
     else 
       speaking_prompt("You have honorably died defending your empire.")
     end
 
-    if health > 0 
-      health = gulf_of_morbihan(name, supplies, health)
-    else
-      speaking_prompt("You have honorably died defending your empire.")
-    end
+    # if health > 0 
+    #   health = gulf_of_morbihan(name, supplies, health)
+    # else
+    #   speaking_prompt("You have honorably died defending your empire.")
+    # end
 
     if health > 0 
+      speaking_prompt("You have sucessfully won three battles against the Gauls, and finally can return to Rome.")
+      gets()
+      system("clear")
       health = ending_ceremonies(name, supplies)
     else
       speaking_prompt("You have honorably died defending your empire.")

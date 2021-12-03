@@ -36,6 +36,28 @@ def ascii_caesar()
   puts("         ||  - |    ")                           
   puts("     ,---'._--''-,, ")   
   puts("    / `-._- _--/,,| ")            
+  puts("   /-._,  `-.__;,,|")                           
+  puts("  /   ;\\      / , ; ")                           
+  puts(" /  ,' | _ - ',/, ;")
+  puts("(  (   |     /, ,,;")
+  puts(" \\  \\  |     ',,/,;")
+  puts("  \\  \\ |    /, / ,;")
+  puts(" (| ,^.|   / ,, ,/;")
+  puts("  `-'./ `-._,, ,/,;")
+  puts("       �-._ `-._,,;")
+  puts("       |/,,`-._ `-.")
+  puts("       |, ,;, ,`-._\\ ")
+end
+
+def ascii_battle_caesar()
+  puts("          ___       ")
+  puts("          \\||      ")
+  puts("         ,'_,-\\     ")
+  puts("         ;'____\\    ")
+  puts("         || =\\=|    ")
+  puts("         ||  - |    ")                           
+  puts("     ,---'._--''-,,---------.--.----_,  ")   
+  puts("    / `-._- _--/,,|   ___,,--'--'._<  ")            
   puts("   /-._,  `-.__;,,|'")                           
   puts("  /   ;\\      / , ; ")                           
   puts(" /  ,' | _ - ',/, ;")
@@ -51,15 +73,15 @@ end
 
 def navy_battle_ascii()
   puts(" ")
-  puts("   __|__ |___| |\                   /|\          ")    
-  puts("   |o__| |___| | \                /__| )         ") 
-  puts("   |___| |___| |o \              /____| ))       ") 
-  puts("  _|___| |___| |__o\            /______| )))     ")
-  puts(" /...\_____|___|____\_/        /________|  )))   ")   
-  puts(" \   o * o * * o o  /                _|____))    ")
-  puts("  \                /          \======| o o /    ")
-  puts(" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  ")
-  puts("    ~~~~~~ ~    ~~~~~~     ~~    ~    ~~~~~   ~~~")
+  puts("   __|__ |___| |\\                   /|\          ")    
+  puts("   |o__| |___| | \\                /__| )         ") 
+  puts("   |___| |___| |o \\              /____| ))       ") 
+  puts("  _|___| |___| |__o\\            /______| )))     ")
+  puts(" /...\\_____|___|____\\_/        /________|  )))  ")   
+  puts(" \\   o * o * * o o  /                _|____))    ")
+  puts("  \\                /          \\==o=o==| o o /   ")
+  puts(" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   ")
+  puts("    ~~~~~ ~    ~~~~~~ ^    ~~    ~   ^ ~~~~~   ~~ ")
 end
 
 def roman_ascii_won()
@@ -576,23 +598,29 @@ def strategy_meeting(name, supplies, health)
 
   ####### some visuals, ascii art of peoples faces would be nice here #######
   ascii_ariovistus
-  speaking_prompt("Ariovistus: Dear friend and ally, I have come here to conquer this land. As a Gaul it is my right to conquer any Gallic lands.")
+  speaking_prompt("Ariovistus: Dear friend and ally, I have just come over the Rhine to these lands,")
+  puts("who have admitted me within their territories, and whose towns are all in my power.ʺ")
   gets()
   system("clear")
   ascii_caesar
-  speaking_prompt("Caesar: We all live by the same rules. Shall I let you decide whether it is my right to conquer any Gallic land?")
+  speaking_prompt("Caesar: King and friend, since, after having been treated with so much kindness by Caesar and the Roman people,") 
+  gets()
+  puts("I have great hopes that you, reminded both of Caesar's kindness and his power, would put an end to your oppression here.")
+  gets()
+  puts("Do not any more bring over any body of men across the Rhine into Gaul")
   gets()
   system("clear")
   ascii_ariovistus
-  speaking_prompt("Ariovistus: So... was this meeting just a pretense for you coming here to crush me?")
+  speaking_prompt("Ariovistus: It appears strange to me... What business do either Caesar or the Roman people have in my own Gaul, which I have conquered in war.")
   gets()
   system("clear")
   ascii_ariovistus
-  speaking_prompt("Ariovistus: You can take your armies out of this country right now. I will be happy to rule this land in your name...")
+  speaking_prompt("Ariovistus: The right of war is, that they who had conquered should govern those whom they had conquered, in what manner they pleased;")
   gets()
   system("clear")
   ascii_ariovistus
-  speaking_prompt("Ariovistus: Anytime you need a favor you won't even have to lift a finger. But, I will conquer this land.")
+  speaking_prompt("Ariovistus: I propose that Caesar might enter an agreement if he chose; for Ariovistus to rule in Gaul in Caesar's name if you hasten away with")
+  puts("what forces you have now")
   gets()
   system("clear")
   
@@ -646,7 +674,11 @@ end
 ########## naval battle ##########
 
 def gulf_of_morbihan(name, supplies, health)
-  puts("This will be a naval battle")
+  system("clear")
+  navy_battle_ascii()
+  speaking_prompt("Julius Caesar has turned his attention to the sea.")
+  gets()
+  speaking_prompt("However... the Venetic fleet in Brittany is much larger than the Roman fleet, and the ships themselves are very large.")
   health
 end
 
@@ -675,11 +707,29 @@ def ending_ceremonies(name, supplies)
     speaking_prompt("For you, #{name}, the war is over. You have been discharged from duty.")
     gets()
     exit
+  elsif supplies.include?("loss at vosges")
+    roman_ascii_lost()
+    puts("As you arrive in Rome, you see Pompey and Crassus welcoming Julius Caesar back to Rome.")
+    speaking_prompt("Crassus: People of Rome...!")
+    gets()
+    speaking_prompt("Wherefore rejoice? What conquest brings he home?")
+    gets()
+    speaking_prompt("He lost territory to Ariovistus, king in Gaul.")
+    gets()
+    speaking_prompt("His credit, along with Rome's, now stands on such slippery ground...")
+    gets()
+    system("clear")
+    roman_ascii_lost()
+    speaking_prompt("For you, #{name}, the war is over. You have been discharged from duty.")
+    gets()
+    exit
   else
     roman_ascii_won()
     puts("======  Julius Caesar has won the war with the barbaric Gauls  ======")
     gets()
     puts("======  Romans' love to #{name} is no less than that to Julius Caesar himself  ======")
+    gets()
+    puts("======  Bring #{name} with triumph home unto their house  ======")
     gets()
     action_prompt("Julius Casear places a laurel on your head for your help in the Gallic Wars.")
     gets()
@@ -1082,8 +1132,215 @@ def archery_fight(player_health, supplies, enemy_health)
   player_health
 end
 
+########## Ariovistus fight ##########
+
 def battle_of_vosges(name, supplies, health)
-  puts("here is the battle between Ariovistus and Caesar")
+
+  points = 1
+
+  speaking_prompt("Some of Ariovistus's horsemen start to throw rocks at your envoy...")
+  gets()
+  system("clear")
+  ascii_ariovistus
+  speaking_prompt("Caesar will feel what the invincible Germans, well‐trained beyond all others to arms, who for fourteen years have not been")
+  puts("beneath a roof, could achieve by their valor.")
+  gets()
+  system("clear")
+  # speaking_prompt("he would feel what the invincible Germans, well‐trained beyond all others to arms, who for fourteen years had not been beneath a
+  # roof, could achieve by their valor.")
+  speaking_prompt("Both sides have left the knoll.")
+  speaking_prompt("A great a panic suddenly seizes the whole Roman army, who must now fight the imposing German army")
+  gets()
+  system("clear")
+  speaking_prompt("Caesar needs you to form a battle plan, so he can write a speech to boost morale.")
+
+  loop do
+    speaking_prompt("Would you like to listen to Caesar's speech?  (y/n)")
+    speech = gets.chomp()
+
+    case speech 
+    when 'Y'
+      system("clear")
+      ascii_battle_caesar
+      speaking_prompt("If, driven on by rage and madness, Ariovistus should make war upon us")
+      gets
+      speaking_prompt("what, after all are you afraid of? Why should you despair either of your own valor or of Caesar's zeal?") 
+      gets
+      speaking_prompt("Of that enemy a defeat had been made within our fathersʹ recollection -- ")
+      gets
+      speaking_prompt("the defeat of the Cimbri and Teutones by Caius Marius,")
+      gets()
+      system("clear")
+
+      action_prompt("As Caesar continues to speak, you feel more and more inspired.")
+      health += 15
+      action_prompt("Your HP has increased by 15 points (it is now #{health.to_s})")
+      gets()
+      system("clear")
+      break
+    when'y'
+      system("clear")
+      ascii_battle_caesar
+      speaking_prompt("If, driven on by rage and madness, Ariovistus should make war upon us")
+      gets
+      speaking_prompt("what, after all are you afraid of? Why should you despair either of your own valor or of Caesar's zeal?") 
+      gets
+      speaking_prompt("Of that enemy a defeat had been made within our fathersʹ recollection -- ")
+      gets
+      speaking_prompt("the defeat of the Cimbri and Teutones by Caius Marius,")
+      gets()
+      system("clear")
+      
+      action_prompt("As Caesar continues to speak, you feel more and more inspired.")
+      health += 15
+      action_prompt("Your HP has increased by 15 points (it is now #{health.to_s})")
+      gets()
+      system("clear")
+      break
+    when 'n'
+      break
+    when "N"
+      break
+    else
+      ("Would  you like to listen to Caesar's speech?")
+    end
+  end
+
+  speaking_prompt("You tell Caesar that he should request another metting with Ariovistus.")
+  gets()
+
+  loop do 
+    speaking_prompt("Should Caesar send senior officials (s) or two trusted friends (f) both Caesar and Ariovistus are familiar with?")
+    envoy =  gets.chomp()
+
+    case envoy
+    when "s"
+      speaking_prompt("Caesar has recieved word that both senior officials have been executed by Ariovistus as a show of power.")
+      gets()
+      system("clear")
+      points -= 1
+      break
+    when "S"
+      speaking_prompt("Caesar has recieved word that both senior officials have been executed by Ariovistus as a show of power.")
+      gets()
+      system("clear")
+      points -= 1
+      break
+    when "f"
+      speaking_prompt("Caesar has dispatched Valerius Procillus, his trusted friend, and Caius Mettius, a merchant who had traded successfully with Ariovistus.")
+      gets()
+      speaking_prompt("Ariovistus is insulted, and takes the messengers as hostages.")
+      gets()
+      system("clear")
+      points += 1
+      break
+    when "F"
+      speaking_prompt("Caesar has dispatched Valerius Procillus, his trusted friend, and Caius Mettius, a merchant who had traded successfully with Ariovistus.")
+      gets()
+      speaking_prompt("Ariovistus is insulted, and takes the messengers as hostages.")
+      gets()
+      system("clear")
+      points += 1
+      break
+    else
+      speaking_prompt("Should Caesar send senior officials (s) or two trusted friends (f) both Caesar and Ariovistus are familiar with?")
+    end
+  end
+
+  loop do
+    speaking_prompt("Ariovisuts has made camp two miles miles behind Caesar, thus cutting off his communication and supply lines with the allied tribes.")
+    speaking_prompt("Should you try to entice Ariovistus into battle (b), or erect (e) a second camp built near Ariovistus' position to cut of his supplies?")
+    build_camp = gets.chomp()
+
+    case build_camp
+    when "b"
+      speaking_prompt("Ariovistus knows you will be out of food and supplies soon, he decides to wait you out and cannot be enticed into battle.")
+      gets()
+      system("clear")
+      points -= 1 
+      break
+    when "B"
+      speaking_prompt("Ariovistus knows you will be out of food and supplies soon, he decides to wait you out and cannot be enticed into battle.")
+      gets()
+      system("clear")
+      points -= 1 
+      break
+    when "e"
+      speaking_prompt("You've set up a camp, closer to Ariovistus's camp. This will put you in a better position to launch an attack.")
+      gets()
+      system("clear")
+      points += 1
+      break
+    when "E"
+      speaking_prompt("You've set up a camp, closer to Ariovistus's camp. This will put you in a better position to launch an attack.")
+      gets()
+      system("clear")
+      points += 1
+      break
+    else
+      speaking_prompt("You must make a decision.")
+      gets
+    end
+  end
+
+  loop do 
+    speaking_prompt("You must assemble an advance on Ariovistus") 
+    speaking_prompt("Should you assemble a triplex acies, with a charge led by Publius Crassus (P), or set up a testudo, led by Juilius Caesar (J)?")
+    formation = gets.chomp()
+
+    case formation
+    when "p"
+      speaking_prompt("You advise Caesar that he should put Publius Crassus in charge of a triplex axis.")
+      gets()
+      speaking_prompt("Caesar lines up on the right flank, while Crassus leads a charge on Ariovistus")
+      gets()
+      speaking_prompt("Germanic tribesmen under Ariovistus try to drive back the left flank, 
+      but Crassus with his cavalry charge not only restores balance to the battle, but breaks the whole Germanic line which then flees back across the Rhine.")
+      gets()
+      system("clear")
+      points += 1
+      break
+    when "P"
+      speaking_prompt("You advise Caesar that he should put Publius Crassus in charge of a triplex axis.")
+      gets()
+      speaking_prompt("Caesar lines up on the right flank, while Crassus leads a charge on Ariovistus")
+      gets()
+      speaking_prompt("Germanic tribesmen under Ariovistus try to drive back the left flank, 
+      but Crassus with his cavalry charge not only restores balance to the battle, but breaks the whole Germanic line which then flees back across the Rhine.")
+      gets()
+      system("clear")
+      points += 1
+      break
+    when "j"
+      speaking_prompt("You advise Caesar that he should lead a testudo against Ariovistus's camp.")
+      gets()
+      speaking_prompt("This formation is usually used in response to distant missile fire, but Caesar follows your advice.") 
+      gets()
+      speaking_prompt("Unfortunately, this formation moves at a tortoise-like speed, and Ariovistus was able to get the upper hand in this battle")
+      gets()
+      system("clear")
+      points -= 1
+      break
+    when "J"
+      speaking_prompt("You advise Caesar that he should lead a testudo against Ariovistus's camp.")
+      gets()
+      speaking_prompt("This formation is usually used in response to distant missile fire, but Caesar follows your advice.") 
+      gets()
+      speaking_prompt("Unfortunately, this formation moves at a tortoise-like speed, and Ariovistus was able to get the upper hand in this battle")
+      gets()
+      system("clear")
+      points -= 1
+      break
+    else
+      ("Do you assemble a triplex acies, or a testudo?")
+    end
+  end
+
+  if points <= 1
+    supplies << "loss at vosges"
+    speaking_prompt("This battle did not go well for you and Caesar, we will see how Rome reacts upon your return...")
+  end
+
   health
 end
 
